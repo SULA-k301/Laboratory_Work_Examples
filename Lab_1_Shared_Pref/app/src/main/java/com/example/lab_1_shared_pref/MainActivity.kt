@@ -1,9 +1,7 @@
 package com.example.lab_1_shared_pref
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -21,15 +19,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appSettings: AppSettings
 
     private val buttonSaveOnClick = View.OnClickListener {
-        Log.d("Zeek", "buttonSaveOnClick")
         val text = editText.text.toString()
         textView.text = text
         appSettings.saveText(text)
     }
 
     private val buttonRestoreOnClick = View.OnClickListener {
-        Log.d("Zeek", "buttonRestoreOnClick")
-
         textView.text = appSettings.restoreText()
     }
 
