@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
+import com.google.android.material.tabs.TabLayout
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -15,8 +14,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var button1: Button
     private lateinit var button2: Button
     private lateinit var button3: Button
+    private lateinit var button9: Button
     private lateinit var editText: EditText
     private lateinit var textView: TextView
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +27,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         button1 = findViewById(R.id.button)
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
+        button9 = findViewById(R.id.button9)
         editText = findViewById(R.id.editTextText)
         textView = findViewById(R.id.textView3)
+        tabLayout = findViewById(R.id.tabLayout)
         button1.setOnClickListener(this)
         button2.setOnClickListener(this)
         button3.setOnClickListener(this)
+        button9.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -82,6 +86,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button3 -> {
                 val intent = Intent(this, SecondActivity::class.java)
                 startActivityForResult(intent, REQUEST_CODE_SECOND_ACTIVITY)
+            }
+
+            R.id.button9 ->{
+                val intent = Intent(this, FragmentActivity::class.java)
+                startActivity(intent)
             }
         }
     }
