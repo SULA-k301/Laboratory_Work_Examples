@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.tabs.TabLayout
 
 
@@ -17,7 +18,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var button9: Button
     private lateinit var editText: EditText
     private lateinit var textView: TextView
-    private lateinit var tabLayout: TabLayout
+
+    private val secondActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == RESULT_OK){
+            val result = "Result: ${result.data?.getStringExtra(SecondActivity.KEY_TEXT)}"
+            textView.text = result
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +37,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         button9 = findViewById(R.id.button9)
         editText = findViewById(R.id.editTextText)
         textView = findViewById(R.id.textView3)
-        tabLayout = findViewById(R.id.tabLayout)
         button1.setOnClickListener(this)
         button2.setOnClickListener(this)
         button3.setOnClickListener(this)
@@ -46,8 +52,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onResume()
         Log.d("Zeek", "onResume")
     }
-
-    //
 
     override fun onRestart() {
         super.onRestart()
@@ -85,7 +89,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.button3 -> {
                 val intent = Intent(this, SecondActivity::class.java)
-                startActivityForResult(intent, REQUEST_CODE_SECOND_ACTIVITY)
+                secondActivityResult.launch(intent)
             }
 
             R.id.button9 ->{
@@ -95,18 +99,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SECOND_ACTIVITY) {
-            if (resultCode == RESULT_OK){
-                textView.text = data?.getStringExtra(SecondActivity.KEY_TEXT)
-            }
-        }
-    }
-
     companion object {
-        private const val REQUEST_CODE_SECOND_ACTIVITY = 12345
         const val KEY_MESSAGE = "KEY_MESSAGE"
     }
 }
